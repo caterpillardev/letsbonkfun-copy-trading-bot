@@ -487,7 +487,7 @@ impl MarketState {
         Ok(Queue { header, buf })
     }
 
-    fn load_event_queue_mut<'a>(&self, queue: &'a AccountInfo) -> DexResult<EventQueue<'a>> {
+    pub fn load_event_queue_mut<'a>(&self, queue: &'a AccountInfo) -> DexResult<EventQueue<'a>> {
         check_assert_eq!(&queue.key.to_aligned_bytes(), &identity(self.event_q))
             .map_err(|_| DexErrorCode::WrongEventQueueAccount)?;
         let (header, buf) = strip_header::<EventQueueHeader, Event>(queue, false)?;

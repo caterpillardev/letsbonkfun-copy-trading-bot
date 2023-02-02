@@ -724,6 +724,37 @@ impl Slab {
         self.remove_by_key(self.get(self.find_max()?)?.key()?)
     }
 
+    pub fn traverse_orders(&self, filter_owner: Option<[u64; 4]>) -> Vec<LeafNode> {
+        fn walk_rec<'a>(
+            slab: &'a Slab,
+            sub_root: NodeHandle,
+            buf: &mut Vec<LeafNode>,
+            filter_owner: Option<[u64; 4]>,
+        ) {
+            match slab.get(sub_root).unwrap().case().unwrap() {
+                NodeRef::Leaf(leaf) => {
+                    if let Some(owner) = filter_owner {
+                        if leaf.owner() == owner {
+                            buf.push(*leaf);
+                        }
+                    } else {
+                        buf.push(*leaf);
+                    }
+                }
+                NodeRef::Inner(inner) => {
+                    walk_rec(slab, inner.children[0], buf, filter_owner);
+                    walk_rec(slab, inner.children[1], buf, filter_owner);
+                }
+            }
+        }
+
+        let mut buf = Vec::with_capacity(self.header().leaf_count as usize);
+        if let Some(r) = self.root() {
+            walk_rec(self, r, &mut buf, filter_owner);
+        }
+        buf
+    }
+
     #[cfg(test)]
     fn traverse(&self) -> Vec<&LeafNode> {
         fn walk_rec<'a>(slab: &'a Slab, sub_root: NodeHandle, buf: &mut Vec<&'a LeafNode>) {
