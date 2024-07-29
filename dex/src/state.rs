@@ -631,6 +631,38 @@ impl OpenOrders {
         Ok(())
     }
 
+    #[inline]
+    pub fn load<'a>(
+        orders_account: &'a AccountInfo,
+        market_account: Option<&AccountInfo>,
+        owner_account: Option<&AccountInfo>,
+        program_id: &Pubkey,
+    ) -> DexResult<RefMut<'a, Self>> {
+        check_assert_eq!(orders_account.owner, program_id)?;
+        let mut account_data: RefMut<'a, [u8]>;
+        let state: RefMut<'a, Self>;
+
+        account_data = RefMut::map(orders_account.try_borrow_mut_data()?, |data| *data);
+        check_account_padding(&mut account_data)?;
+        state = RefMut::map(account_data, |data| {
+            from_bytes_mut(cast_slice_mut(
+                check_account_padding(data).unwrap_or_else(|_| unreachable!()),
+            ))
+        });
+
+        state.check_flags()?;
+        if let Some(market_acc) = market_account {
+            check_assert_eq!(identity(state.market), market_acc.key.to_aligned_bytes())
+                .map_err(|_| DexErrorCode::WrongOrdersAccount)?;
+        }
+
+        if let Some(owner) = owner_account {
+            check_assert_eq!(&identity(state.owner), &owner.key.to_aligned_bytes())
+                .map_err(|_| DexErrorCode::WrongOrdersAccount)?;
+        }
+        Ok(state)
+    }
+
     fn credit_locked_coin(&mut self, native_coin_amount: u64) {
         self.native_coin_total = self
             .native_coin_total
