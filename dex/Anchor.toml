@@ -1,13 +1,18 @@
-anchor_version = "0.25.0"
+[toolchain]
 
-[workspace]
-members = [
-    ".",
-]
-
-[provider]
-cluster = "localnet"
-wallet = "~/.config/solana/id.json"
+[features]
+resolution = true
+skip-lint = false
 
 [programs.mainnet]
-serum_dex = "srmqPvymJeFKQ4zGQed1GFppgkRHL9kaELCbyksJtPX"
+serum_dex = "6TvG8HP3H8rvGnwMB9FiUCXGHdVdDHzGgf7FQ96M1jw7"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "Localnet"
+wallet = "~/.config/solana/id.json"
+
+[workspace]
+members = ["."]
