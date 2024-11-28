@@ -35,7 +35,7 @@ num-traits = "0.2.15"
 arrayref = "0.3.6"
 bytemuck = "1.12.3"
 byteorder = "1.4.3"
-default-env = "0.1.1"
+# default-env = "0.1.1"
 
 [lib]
 crate-type = ["cdylib", "lib"]
@@ -52,9 +52,9 @@ lto = "fat"
 codegen-units = 1
 
 [profile.release.build-override]
+overflow-checks = true
 opt-level = 3
 incremental = false
 codegen-units = 1
-
 [profile.test]
 opt-level = 2
