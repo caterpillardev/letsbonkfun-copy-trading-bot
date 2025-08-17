@@ -4,20 +4,20 @@
 
 ## ⚡ **Current Status: Production-Ready Scaffold** ⚠️
 
-**ReoswellEcho** is now a **fully functional trading bot scaffold** with real blockchain integration capabilities. The bot is specifically designed for bags.fm token launches using Meteora DBC and DMM v2.
+**ReoswellEcho** is now a **fully functional trading bot scaffold** with real blockchain integration capabilities. The bot is specifically designed for bags.fm token launches using Meteora DBC and DAMM v2.
 
 **What's Working:**
 - ✅ **Complete CLI interface** with all trading commands
 - ✅ **Real Solana blockchain integration** (wallet management, RPC clients)
 - ✅ **Bags.fm API client** for token information and monitoring
 - ✅ **Meteora DBC integration** for token launches and bonding curves
-- ✅ **Meteora DMM v2 support** for post-launch trading
+- ✅ **Meteora DAMM v2 support** for post-launch trading
 - ✅ **Advanced market making** with spread calculations
 - ✅ **Real-time wallet tracking** with blockchain queries
 - ✅ **Comprehensive export system** with CSV and summary reports
 
 **What Needs Implementation:**
-- 🔄 **Real Meteora program calls** (DBC and DMM v2 instructions)
+- 🔄 **Real Meteora program calls** (DBC and DAMM v2 instructions)
 - 🔄 **Real-time blockchain event monitoring** (WebSocket connections)
 - 🔄 **Advanced order management** (limit orders, stop losses)
 
@@ -28,7 +28,7 @@
 - **Blockchain:** Solana (fully integrated)
 - **Language:** Rust 2021 with async/await
 - **Launch Protocol:** Meteora DBC (Dynamic Bonding Curve)
-- **Trading Protocol:** Meteora DMM v2 (Dynamic Market Maker)
+- **Trading Protocol:** Meteora DAMM v2 (Dynamic Automated Market Maker)
 - **Launchpad:** bags.fm API integration
 - **Infrastructure:** Multi-RPC failover, custom rate limits
 - **Reporting:** CSV export, real-time analytics
@@ -83,7 +83,7 @@ cargo run -- -vv sniper --token DemoToken123 --budget-sol 0.5
 # Dry run first
 cargo run -- bundler --plan plans/example.json --dry-run
 
-# Execute bundle (creates Meteora DBC pools)
+# Execute bundle (creates Meteora DBC pools, migrates to DAMM v2)
 cargo run -- bundler --plan plans/example.json
 ```
 
@@ -200,9 +200,9 @@ time_utc,wallet,token,side,qty,price,pnl,roi_pct
 - [x] Solana client integration
 - [x] Bags.fm API client
 - [x] Meteora DBC framework
-- [x] Meteora DMM v2 framework
+- [x] Meteora DAMM v2 framework
 - [ ] Real Meteora DBC program calls
-- [ ] Real Meteora DMM v2 program calls
+- [ ] Real Meteora DAMM v2 program calls
 
 ### **Phase 2: Advanced Features**
 - [ ] WebSocket blockchain monitoring

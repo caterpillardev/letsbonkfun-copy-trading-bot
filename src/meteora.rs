@@ -28,7 +28,7 @@ pub enum DbcStatus {
 }
 
 #[derive(Debug, Clone)]
-pub struct MeteoraDmmPool {
+pub struct MeteoraDammPool {
     pub address: String,
     pub token_a: String,
     pub token_b: String,
@@ -40,14 +40,14 @@ pub struct MeteoraDmmPool {
 
 pub struct MeteoraClient {
     dbc_program_id: Pubkey,
-    dmm_program_id: Pubkey,
+    damm_program_id: Pubkey,
 }
 
 impl MeteoraClient {
     pub fn new() -> Result<Self> {
         Ok(Self {
             dbc_program_id: Pubkey::from_str("DBCAwfnVqxqHMjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8")?,
-            dmm_program_id: Pubkey::from_str("DMMWcVfJTPT6WM5U2J5otPvEonrCJ5FykfCbrbwVPua6")?,
+            damm_program_id: Pubkey::from_str("DMMWcVfJTPT6WM5U2J5otPvEonrCJ5FykfCbrbwVPua6")?,
         })
     }
 
@@ -88,15 +88,15 @@ impl MeteoraClient {
         Ok((tokens_received, price_impact))
     }
 
-    pub async fn migrate_to_dmm(
+    pub async fn migrate_to_damm(
         &self,
         dbc_pool: &MeteoraDbcPool,
         target_amplification: f64,
-    ) -> Result<MeteoraDmmPool> {
-        log::info!("Migrating DBC pool to DMM v2: {}", dbc_pool.address);
+    ) -> Result<MeteoraDammPool> {
+        log::info!("Migrating DBC pool to DAMM v2: {}", dbc_pool.address);
 
-        let dmm_pool = MeteoraDmmPool {
-            address: format!("DmmPool{}", dbc_pool.token_mint),
+        let damm_pool = MeteoraDammPool {
+            address: format!("DammPool{}", dbc_pool.token_mint),
             token_a: dbc_pool.base_token.clone(),
             token_b: dbc_pool.token_mint.clone(),
             reserve_a: 100_000_000_000,
@@ -105,8 +105,8 @@ impl MeteoraClient {
             amplification: target_amplification,
         };
 
-        log::info!("Migration completed. New DMM pool: {}", dmm_pool.address);
-        Ok(dmm_pool)
+        log::info!("Migration completed. New DAMM pool: {}", damm_pool.address);
+        Ok(damm_pool)
     }
 
     fn calculate_dbc_buy_amount(&self, pool: &MeteoraDbcPool, amount_base: f64) -> Result<u64> {

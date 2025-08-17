@@ -33,7 +33,7 @@
     "delay_between_launches": 300,
     "target_protocol": "meteora_dbc",
     "migration_strategy": "auto",
-    "dmm_amplification": 100
+    "damm_amplification": 100
   }
 }
 
