@@ -1,0 +1,39 @@
+{
+  "plans": [
+    {
+      "name": "ReoswellEcho Alpha Token",
+      "symbol": "SGAT",
+      "supply": 1000000000,
+      "liquidity_sol": 2.5,
+      "initial_price_sol": 0.0001,
+      "description": "First token in the ReoswellEcho ecosystem"
+    },
+    {
+      "name": "BagsFM Launch Token",
+      "symbol": "BFLT",
+      "supply": 500000000,
+      "liquidity_sol": 1.8,
+      "initial_price_sol": 0.0002,
+      "description": "Token for bags.fm platform integration"
+    },
+    {
+      "name": "Trading Bot Token",
+      "symbol": "TBT",
+      "supply": 750000000,
+      "liquidity_sol": 3.2,
+      "initial_price_sol": 0.00015,
+      "description": "Utility token for automated trading features"
+    }
+  ],
+  "metadata": {
+    "total_liquidity_sol": 7.5,
+    "total_tokens": 3,
+    "estimated_market_cap": 7500,
+    "launch_strategy": "sequential",
+    "delay_between_launches": 300,
+    "target_protocol": "meteora_dbc",
+    "migration_strategy": "auto",
+    "dmm_amplification": 100
+  }
+}
+
