@@ -43,7 +43,6 @@ impl Config {
         })
     }
 
-    /// Redacted view for logs (avoid leaking secrets)
     pub fn safe(&self) -> SafeConfig<'_> {
         SafeConfig {
             rpc_url: &self.rpc_url,

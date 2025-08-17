@@ -47,15 +47,13 @@ impl DexClient {
     }
 
     pub async fn get_pool_info(&self, pool_address: &str) -> Result<DexPool> {
-        // In real implementation, this would query the actual DEX programs
-        // For now, return simulated data
         let pool = DexPool {
             address: pool_address.to_string(),
             token_a: "So11111111111111111111111111111111111111112".to_string(), // SOL
             token_b: "DemoToken123".to_string(),
-            reserve_a: 100_000_000_000, // 100 SOL
-            reserve_b: 1_000_000_000_000, // 1B tokens
-            fee_rate: 0.0025, // 0.25%
+            reserve_a: 100_000_000_000, 
+            reserve_b: 1_000_000_000_000,
+            fee_rate: 0.0025, 
             dex_type: DexType::Raydium,
         };
         Ok(pool)
@@ -73,7 +71,6 @@ impl DexClient {
             (pool.reserve_b, pool.reserve_a)
         };
 
-        // Simple constant product formula (x * y = k)
         let fee_multiplier = 1.0 - pool.fee_rate;
         let input_with_fee = (input_amount as f64) * fee_multiplier;
         
@@ -113,8 +110,7 @@ impl DexClient {
         _input_amount: u64,
         _min_output_amount: u64,
     ) -> Result<Instruction> {
-        // Placeholder for Raydium swap instruction
-        // In real implementation, this would create the actual instruction
+        //Instruction
         Err(anyhow!("Raydium swap instruction not yet implemented"))
     }
 
@@ -127,8 +123,6 @@ impl DexClient {
         _input_amount: u64,
         _min_output_amount: u64,
     ) -> Result<Instruction> {
-        // Placeholder for Orca swap instruction
-        // In real implementation, this would create the actual instruction
         Err(anyhow!("Orca swap instruction not yet implemented"))
     }
 
@@ -138,14 +132,11 @@ impl DexClient {
         token_a_amount: u64,
         token_b_amount: u64,
     ) -> Result<u64> {
-        // Calculate LP tokens to mint based on current reserves
-        let total_lp_supply = 1_000_000_000; // Example total supply
+        let total_lp_supply = 1_000_000_000; 
         
         let lp_tokens = if pool.reserve_a == 0 && pool.reserve_b == 0 {
-            // First liquidity provider
             ((token_a_amount as f64 * token_b_amount as f64).sqrt() as u64).max(1_000_000)
         } else {
-            // Subsequent liquidity providers
             let ratio_a = (token_a_amount as f64) / (pool.reserve_a as f64);
             let ratio_b = (token_b_amount as f64) / (pool.reserve_b as f64);
             let ratio = ratio_a.min(ratio_b);
@@ -160,7 +151,7 @@ impl DexClient {
         pool: &DexPool,
         lp_tokens: u64,
     ) -> Result<(u64, u64)> {
-        let total_lp_supply = 1_000_000_000; // Example total supply
+        let total_lp_supply = 1_000_000_000; 
         let ratio = (lp_tokens as f64) / (total_lp_supply as f64);
         
         let token_a_amount = (pool.reserve_a as f64 * ratio) as u64;

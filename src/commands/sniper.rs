@@ -33,7 +33,6 @@ pub async fn run(cfg: &Config, token: &str, budget_sol: f64) -> Result<()> {
         },
         Err(_) => {
             log::warn!("Failed to fetch token info from bags.fm, using fallback data");
-            // Fallback token info
             crate::bagsfm::BagsFmToken {
                 address: token.to_string(),
                 name: "Unknown Token".to_string(),
@@ -49,16 +48,13 @@ pub async fn run(cfg: &Config, token: &str, budget_sol: f64) -> Result<()> {
         }
     };
     
-    // Monitor for DBC pool creation
     log::info!("Monitoring for Meteora DBC pool creation...");
     
-    // Simulate DBC pool detection (in real implementation, this would monitor blockchain events)
     let dbc_pool_address = format!("DbcPool{}", token);
     let dbc_pool = meteora_client.get_dbc_pool_info(&dbc_pool_address).await?;
     log::info!("DBC pool detected: {} ({} <-> {})", 
         dbc_pool.address, dbc_pool.base_token, dbc_pool.token_mint);
     
-    // Calculate DBC buy amounts
     let (tokens_received, price_impact) = meteora_client.buy_from_dbc(
         &dbc_pool,
         budget_sol
@@ -70,15 +66,10 @@ pub async fn run(cfg: &Config, token: &str, budget_sol: f64) -> Result<()> {
         price_impact * 100.0
     );
     
-    // Execute the swap (simulated for now)
     log::info!("Executing swap transaction...");
     
-    // In real implementation, this would:
-    // 1. Create the swap instruction
-    // 2. Build and sign the transaction
-    // 3. Send and confirm the transaction
+  
     
-    // For now, simulate successful execution
     let signature = "DemoSignature123456789".to_string();
     log::info!("BUY executed successfully! Signature: {}", signature);
     log::info!("Received {} tokens for {:.4} SOL", 

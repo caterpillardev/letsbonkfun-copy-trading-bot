@@ -58,32 +58,26 @@ pub async fn run(cfg: &Config, plan_path: &str, dry_run: bool) -> Result<()> {
             
             // Create token metadata for bags.fm
             let token_metadata = crate::bagsfm::BagsFmToken {
-                address: format!("Token{}", i), // This would be the actual mint address
-                name: p.name.clone(),
+                address: format!("Token{}", i), 
                 symbol: p.symbol.clone(),
                 decimals: 9,
                 total_supply: p.supply.to_string(),
                 price_usd: None,
                 market_cap: None,
                 volume_24h: None,
-                liquidity_usd: Some(p.liquidity_sol * 100.0), // Rough USD conversion
+                liquidity_usd: Some(p.liquidity_sol * 100.0), 
                 created_at: chrono::Utc::now().to_rfc3339(),
             };
             
             log::info!("Token metadata created: {} ({})", token_metadata.name, token_metadata.symbol);
             
-            // Simulate bags.fm launch process
-            // In real implementation, this would:
-            // 1. Call bags.fm API to create token listing
-            // 2. Wait for approval/listing
-            // 3. Create Raydium/Orca pool
-            // 4. Add initial liquidity
+    
             
             log::info!("Submitting to bags.fm for approval...");
-            sleep(Duration::from_millis(1000)).await; // Simulate API call
+            sleep(Duration::from_millis(1000)).await; 
             
             log::info!("Creating Meteora DBC pool...");
-            let curve_type = DbcCurveType::Linear; // Can be configured per token
+            let curve_type = DbcCurveType::Linear; 
             let dbc_pool = meteora_client.create_dbc_pool(
                 &format!("Token{}", i),
                 "SOL",
@@ -99,7 +93,6 @@ pub async fn run(cfg: &Config, plan_path: &str, dry_run: bool) -> Result<()> {
             
             log::info!("Launched {} with initial liquidity {:.2} SOL", p.symbol, p.liquidity_sol);
             
-            // Small delay between launches
             if i < plan.plans.len() - 1 {
                 sleep(Duration::from_millis(2000)).await;
             }

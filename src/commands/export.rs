@@ -60,8 +60,7 @@ pub async fn run(cfg: &Config, out_path: &str) -> Result<()> {
     let mut activity_wtr = WriterBuilder::new().from_path(&activity_file).context("failed to open activity CSV")?;
 
     let now = Utc::now().to_rfc3339_opts(SecondsFormat::Secs, true);
-
-    // Sample trade data (in real implementation, this would come from blockchain)
+    //this is demo data
     let trades = vec![
         TradeRow { 
             time_utc: now.clone(), 
@@ -119,7 +118,6 @@ pub async fn run(cfg: &Config, out_path: &str) -> Result<()> {
         },
     ];
 
-    // Sample wallet activity data
     let activities = vec![
         WalletActivityRow {
             time_utc: now.clone(),
@@ -153,19 +151,15 @@ pub async fn run(cfg: &Config, out_path: &str) -> Result<()> {
         },
     ];
 
-    // Write trades
     for trade in trades {
         trades_wtr.serialize(trade)?;
     }
     trades_wtr.flush()?;
 
-    // Write wallet activity
     for activity in activities {
         activity_wtr.serialize(activity)?;
     }
     activity_wtr.flush()?;
-
-    // Generate summary report
     let summary_file = out.with_file_name("summary.txt");
     let summary_content = format!(
         "ReoswellEcho Trading Bot Export Summary
@@ -193,8 +187,8 @@ Real implementation would include actual blockchain transaction data.",
         now,
         cfg.wallet_address,
         trades.len(),
-        2.1, // Sample total volume
-        0.7, // Sample average trade size
+        2.1, 
+        0.7, 
         cfg.export_dir,
         cfg.rpc_url,
         cfg.slippage_bps,

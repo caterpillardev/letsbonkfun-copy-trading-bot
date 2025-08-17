@@ -38,7 +38,6 @@ pub async fn run(cfg: &Config, pair: &str, spread_bps: u32) -> Result<()> {
         
         log::info!("Mid price: {:.8}, Bid: {:.8}, Ask: {:.8}", mid_price, bid_price, ask_price);
         
-        // Calculate order sizes (simplified)
         let base_order_size = 0.1; // 0.1 SOL per order
         let base_order_lamports = (base_order_size * 1_000_000_000.0) as u64;
         
@@ -46,16 +45,9 @@ pub async fn run(cfg: &Config, pair: &str, spread_bps: u32) -> Result<()> {
         log::debug!("Placing bid order: {} SOL at {:.8}", base_order_size, bid_price);
         log::debug!("Placing ask order: {} SOL at {:.8}", base_order_size, ask_price);
         
-        // In real implementation, this would:
-        // 1. Create limit order instructions
-        // 2. Build and send transactions
-        // 3. Monitor order fills
-        // 4. Rebalance inventory
         
-        // Simulate order processing time
         sleep(Duration::from_millis(500)).await;
         
-        // Check if orders were filled (simulated)
         let filled_bid = rand::random::<bool>();
         let filled_ask = rand::random::<bool>();
         
@@ -66,11 +58,9 @@ pub async fn run(cfg: &Config, pair: &str, spread_bps: u32) -> Result<()> {
             log::info!("Ask order filled at {:.8}", ask_price);
         }
         
-        // Rebalance inventory if needed
         log::debug!("Rebalancing depth and inventory...");
         sleep(Duration::from_millis(300)).await;
         
-        // Calculate PnL for this round (simulated)
         let round_pnl = if filled_bid && filled_ask {
             let profit = (ask_price - bid_price) * base_order_size;
             log::info!("Round {} PnL: {:.6} SOL", round, profit);
@@ -79,7 +69,6 @@ pub async fn run(cfg: &Config, pair: &str, spread_bps: u32) -> Result<()> {
             0.0
         };
         
-        // Wait before next round
         if round < 5 {
             sleep(Duration::from_millis(1000)).await;
         }

@@ -109,8 +109,6 @@ impl BagsFmClient {
     }
 
     pub async fn monitor_new_listings(&self) -> Result<Vec<BagsFmToken>> {
-        // Simulate monitoring for new token listings
-        // In real implementation, this would use WebSocket or polling
         let url = format!("{}/v1/tokens/new", self.base_url);
         let response = self.client.get(&url)
             .header("User-Agent", "ReoswellEcho-Bot/1.0")
@@ -121,7 +119,6 @@ impl BagsFmClient {
             let tokens: Vec<BagsFmToken> = response.json().await?;
             Ok(tokens)
         } else {
-            // Fallback to simulated data for development
             Ok(vec![
                 BagsFmToken {
                     address: "DemoToken123".to_string(),
